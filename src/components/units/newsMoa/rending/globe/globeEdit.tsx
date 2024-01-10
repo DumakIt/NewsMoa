@@ -3,7 +3,7 @@ import Globe, { GlobeMethods } from "react-globe.gl";
 import { countriesHex } from "../../../../commons/utility/countriesHex";
 import { countriesData } from "../../../../commons/utility/countriesData";
 
-export default function GlebeEdit(): JSX.Element {
+export default function GlobeEdit(): JSX.Element {
   const globeRef = useRef<GlobeMethods>();
 
   useEffect(() => {
