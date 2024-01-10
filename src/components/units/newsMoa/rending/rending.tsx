@@ -1,26 +1,18 @@
 import dynamic from "next/dynamic";
-import { countries } from "../../../commons/utility/countries";
 import * as S from "./rendingStyles";
 
 const Globe = dynamic(
-  () => import("react-globe.gl").then((mod) => mod.default),
+  () => import("./globe/glebeEdit").then((mod) => mod.default),
   {
     ssr: false,
+    loading: () => <S.LoadingText>Loading The World...</S.LoadingText>,
   },
 );
 
 export default function Rending(): JSX.Element {
   return (
     <S.Container>
-      <Globe
-        hexPolygonsData={countries.features}
-        hexPolygonResolution={3}
-        hexPolygonMargin={0.4}
-        hexPolygonColor={() => "#239788"}
-        backgroundColor={"#222534"}
-        showGlobe={false}
-        showAtmosphere={false}
-      />
+      <Globe />
     </S.Container>
   );
 }

@@ -1,4 +1,4 @@
-export let countries = {
+export const countriesHex = {
   type: "FeatureCollection",
   features: [
     {
