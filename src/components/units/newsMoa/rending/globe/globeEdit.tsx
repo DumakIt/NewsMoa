@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Globe, { GlobeMethods } from "react-globe.gl";
-import { countriesHex } from "../../../../commons/utility/countriesHex";
-import { countriesData } from "../../../../commons/utility/countriesData";
+import { countriesHex } from "../../../../../commons/constants/countriesHex";
+import { countriesData } from "../../../../../commons/constants/countriesData";
 import * as S from "./globeEditStyles";
 
 export default function GlobeEdit(): JSX.Element {
   const globeRef = useRef<GlobeMethods>();
+  const [popup, setPopup] = useState(false);
 
   useEffect(() => {
     if (!globeRef?.current) return;
@@ -16,15 +17,34 @@ export default function GlobeEdit(): JSX.Element {
       lng: 127.766922,
       altitude: 1.75,
     });
-  }, [globeRef.current]);
+  }, []);
 
-  const onHoverPopup = (boolean: boolean) => () => {
-    if (!globeRef?.current) return;
-    globeRef.current.controls().autoRotate = boolean;
-  };
+  const toggleLabelClass = useCallback((country: string, boolean: boolean) => {
+    const popupElement = document.getElementById(country);
+    popupElement?.classList.toggle("hoverLabel", boolean);
+  }, []);
 
-  const addPopup = (data: any) => {
-    // globe에 팝업 박스 추가
+  const onHoverLabel = useCallback(
+    (enter: any, leave: any) => {
+      // label(노락색 원)에 마우스 enter, leave 및 현재 다른 팝업창의 여부에 따라 display 변경
+      if (enter && !popup) toggleLabelClass(enter.country, true);
+      if (leave && popup) toggleLabelClass(leave.country, false);
+    },
+    [popup],
+  );
+
+  const onHoverPopup = useCallback(
+    (boolean: boolean) => () => {
+      // 팝업 박스에 호버시 globe 회전 정지 및 팝업 확인 state 변경
+      if (!globeRef?.current) return;
+      globeRef.current.controls().autoRotate = boolean;
+      setPopup(!boolean);
+    },
+    [],
+  );
+
+  // globe에 팝업 박스 추가
+  const addPopup = useCallback((data: any) => {
     const el = document.createElement("div");
     el.insertAdjacentHTML(
       "afterbegin",
@@ -35,7 +55,7 @@ export default function GlobeEdit(): JSX.Element {
               <img src="/flags/${data.country}.svg" />
           </div>
           <p class="popupRecent">최근 뉴스</p>
-          <p class="popupTitle">뉴스 제목이 들어갈 자리</p>
+          <p class="popupTitle">뉴스 제목 들어갈 자리</p>
         </div>
       </div>`,
     );
@@ -48,36 +68,23 @@ export default function GlobeEdit(): JSX.Element {
     }
 
     return el;
-  };
-
-  // label 호버시 팝업 박스 display변경을 위한 class 설정
-  const toggleLabelClass = (country: string, addLabel: boolean) => {
-    const popupElement = document.getElementById(country);
-    popupElement?.classList.toggle("hoverLabel", addLabel);
-  };
-
-  const onHoverLabel = (enter: any, leave: any) => {
-    enter && toggleLabelClass(enter.country, true);
-    leave && toggleLabelClass(leave.country, false);
-  };
+  }, []);
 
   return (
     <S.Container>
       <Globe
         ref={globeRef}
         labelsData={countriesData}
-        labelLat={(e: any) => e.lat}
-        labelLng={(e: any) => e.lng}
-        labelText={() => ""}
-        labelDotRadius={2}
-        labelAltitude={0.01}
-        labelColor={() => "rgba(255, 165, 0, 0.85)"}
+        labelText={useCallback(() => "", [])}
+        labelDotRadius={useCallback(() => 2, [])}
+        labelAltitude={useCallback(() => 0.01, [])}
+        labelColor={useCallback(() => "rgba(255, 165, 0, 0.85)", [])}
         labelsTransitionDuration={500}
         onLabelHover={onHoverLabel}
         hexPolygonsData={countriesHex.features}
-        hexPolygonResolution={3}
-        hexPolygonMargin={0.4}
-        hexPolygonColor={() => "#239788"}
+        hexPolygonResolution={useCallback(() => 3, [])}
+        hexPolygonMargin={useCallback(() => 0.4, [])}
+        hexPolygonColor={useCallback(() => "#239788", [])}
         backgroundColor={"#222534"}
         showGlobe={false}
         showAtmosphere={false}
