@@ -1,63 +1,76 @@
-export interface ICountriesData {
-  country: string;
-  lat: number;
-  lng: number;
-  name: string;
-}
+import { ICountriesData } from "../types/constantsTypes";
 
-export const countriesData: ICountriesData[] = [
+export const countriesData: ICountriesData = [
   {
-    country: "KR",
+    country: "kr",
+    language: "kr",
     lat: 35.907757,
     lng: 127.766922,
     name: "대한민국",
+    excludeDomains: "",
   },
   {
-    country: "US",
+    country: "us",
+    language: "en",
     lat: 39.891275,
     lng: -101.375893,
     name: "미국",
+    excludeDomains: "",
   },
   {
-    country: "JP",
+    country: "jp",
+    language: "jp",
     lat: 36.204824,
     lng: 138.252924,
     name: "일본",
+    excludeDomains: "Nikkei.com",
   },
   {
-    country: "CN",
+    country: "zh",
+    language: "zh",
     lat: 35.86166,
     lng: 104.195397,
     name: "중국",
+    excludeDomains: "",
   },
   {
-    country: "GB",
+    country: "gb",
+    language: "en",
     lat: 55.378051,
     lng: -3.435973,
     name: "영국",
+    excludeDomains: "",
   },
   {
-    country: "RU",
+    country: "ru",
+    language: "ru",
     lat: 61.52401,
     lng: 105.318756,
     name: "러시아",
+    excludeDomains: "",
   },
   {
-    country: "AU",
+    country: "au",
+    language: "en",
     lat: -25.274398,
     lng: 133.775136,
     name: "호주",
+    excludeDomains: "",
   },
   {
-    country: "CA",
+    country: "ca",
+    language: "en",
     lat: 56.130366,
     lng: -106.346771,
     name: "캐나다",
+    excludeDomains: "",
   },
   {
-    country: "DE",
+    country: "de",
+    language: "de",
     lat: 51.165691,
     lng: 10.451526,
     name: "독일",
+    excludeDomains: "",
   },
 ];
