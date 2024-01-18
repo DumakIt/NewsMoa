@@ -7,7 +7,6 @@ export const Container = styled.div`
     right: -20px;
     display: none;
     pointer-events: auto;
-    cursor: pointer;
 
     &:hover {
       display: block;
@@ -25,7 +24,6 @@ export const Container = styled.div`
     background-color: white;
     border-radius: 10px;
     pointer-events: auto;
-    cursor: pointer;
   }
 
   & .popupCountry {
@@ -53,14 +51,15 @@ export const Container = styled.div`
   }
 
   & .popupTitle {
-    display: flex;
-    align-items: center;
+    position: relative;
+    padding-left: 14px;
     font-size: 14px;
     font-weight: bold;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    transition: color 0.2s ease;
+    transition: color 0.1s ease;
+    cursor: pointer;
 
     &:hover {
       color: #49c0b0;
@@ -72,6 +71,10 @@ export const Container = styled.div`
 
     &::before {
       content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-70%);
       display: block;
       width: 7px;
       height: 7px;

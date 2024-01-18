@@ -1,7 +1,7 @@
 import { ICountriesData } from "../types/constantsTypes";
 
-export const countriesData: ICountriesData = [
-  {
+export const countriesData: ICountriesData = {
+  kr: {
     country: "kr",
     language: "kr",
     lat: 35.907757,
@@ -9,7 +9,7 @@ export const countriesData: ICountriesData = [
     name: "대한민국",
     excludeDomains: "",
   },
-  {
+  us: {
     country: "us",
     language: "en",
     lat: 39.891275,
@@ -17,15 +17,15 @@ export const countriesData: ICountriesData = [
     name: "미국",
     excludeDomains: "",
   },
-  {
+  jp: {
     country: "jp",
     language: "jp",
     lat: 36.204824,
     lng: 138.252924,
     name: "일본",
-    excludeDomains: "Nikkei.com",
+    excludeDomains: "Nikkei.com, Yomiuri.co.jp",
   },
-  {
+  zh: {
     country: "zh",
     language: "zh",
     lat: 35.86166,
@@ -33,7 +33,7 @@ export const countriesData: ICountriesData = [
     name: "중국",
     excludeDomains: "",
   },
-  {
+  gb: {
     country: "gb",
     language: "en",
     lat: 55.378051,
@@ -41,7 +41,7 @@ export const countriesData: ICountriesData = [
     name: "영국",
     excludeDomains: "",
   },
-  {
+  ru: {
     country: "ru",
     language: "ru",
     lat: 61.52401,
@@ -49,7 +49,7 @@ export const countriesData: ICountriesData = [
     name: "러시아",
     excludeDomains: "",
   },
-  {
+  au: {
     country: "au",
     language: "en",
     lat: -25.274398,
@@ -57,7 +57,7 @@ export const countriesData: ICountriesData = [
     name: "호주",
     excludeDomains: "",
   },
-  {
+  ca: {
     country: "ca",
     language: "en",
     lat: 56.130366,
@@ -65,7 +65,7 @@ export const countriesData: ICountriesData = [
     name: "캐나다",
     excludeDomains: "",
   },
-  {
+  de: {
     country: "de",
     language: "de",
     lat: 51.165691,
@@ -73,4 +73,4 @@ export const countriesData: ICountriesData = [
     name: "독일",
     excludeDomains: "",
   },
-];
+};

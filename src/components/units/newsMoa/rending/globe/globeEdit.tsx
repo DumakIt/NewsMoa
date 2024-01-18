@@ -1,10 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Globe, { GlobeMethods } from "react-globe.gl";
 import { countriesHex } from "../../../../../commons/constants/countriesHex";
 import { countriesData } from "../../../../../commons/constants/countriesData";
+import { IGlobeEditProps } from "./globeEditTypes";
+import { useRouter } from "next/router";
 import * as S from "./globeEditStyles";
 
-export default function GlobeEdit(): JSX.Element {
+export default function GlobeEdit({
+  translateData,
+}: IGlobeEditProps): JSX.Element {
+  const router = useRouter();
   const globeRef = useRef<GlobeMethods>();
   const [popup, setPopup] = useState(false);
 
@@ -17,6 +22,10 @@ export default function GlobeEdit(): JSX.Element {
       lng: 127.766922,
       altitude: 1.75,
     });
+  }, []);
+
+  const countriesDataValues = useMemo(() => {
+    return Object.values(countriesData);
   }, []);
 
   const toggleLabelClass = useCallback((country: string, boolean: boolean) => {
@@ -44,37 +53,60 @@ export default function GlobeEdit(): JSX.Element {
   );
 
   // globe에 팝업 박스 추가
-  const addPopup = useCallback((data: any) => {
-    const el = document.createElement("div");
-    el.insertAdjacentHTML(
-      "afterbegin",
-      `<div id="${data.country}" class="popupContainer">
+  const addPopup = useCallback(
+    (data: any) => {
+      setPopup(false);
+      const el = document.createElement("div");
+      el.insertAdjacentHTML(
+        "afterbegin",
+        `<div id="${data.country}" class="popupContainer">
         <div class="popupWrapper">
           <div class="popupCountry">
             <p>${data.name}</p>
-              <img src="/flags/${data.country}.svg" />
+              <img src="/flags/${data.country}.svg" alt="국기 이미지" />
           </div>
           <p class="popupRecent">최근 뉴스</p>
-          <p class="popupTitle">뉴스 제목 들어갈 자리</p>
+          ${
+            translateData[data.country]
+              ? translateData[data.country]
+                  .map(
+                    (el) =>
+                      `<p class="popupTitle hasData" id=${el.url} key=${el.url}>${el.title}</p>`,
+                  )
+                  .join("")
+              : `<p class="popupTitle">로딩중...</p>`
+          }
         </div>
       </div>`,
-    );
+      );
 
-    // popupContainer에 마우스 이벤트 할당
-    const divElement = el.querySelector("div");
-    if (divElement) {
-      divElement.onmouseenter = onHoverPopup(false);
-      divElement.onmouseleave = onHoverPopup(true);
-    }
+      // popupContainer에 마우스 이벤트 할당
+      const divElement = el.querySelector("div");
+      if (divElement) {
+        divElement.onmouseenter = onHoverPopup(false);
+        divElement.onmouseleave = onHoverPopup(true);
+      }
 
-    return el;
-  }, []);
+      // hasData 클래스를 가진 p태그에 클릭 이벤트 할당
+      const pElement = el.querySelectorAll(".popupTitle.hasData");
+      pElement.forEach((el) => {
+        el.addEventListener("click", () => {
+          // url에 "/"가 있으면 거기까지를 경로로 인식해서 문제가 생기기 때문에 "/"가 아닌 다른 문자로 변경
+          // 해당 페이지에서 다시 "/"로 변경할 예정이기 때문에 다른 url이랑 겹치지 않는 문자로 변경
+          router.push(`/${el.id.replace(/\//g, "-_no_slash_-")}`);
+        });
+      });
+
+      return el;
+    },
+    [translateData],
+  );
 
   return (
     <S.Container>
       <Globe
         ref={globeRef}
-        labelsData={countriesData}
+        labelsData={countriesDataValues}
         labelText={useCallback(() => "", [])}
         labelDotRadius={useCallback(() => 2, [])}
         labelAltitude={useCallback(() => 0.01, [])}
@@ -88,7 +120,7 @@ export default function GlobeEdit(): JSX.Element {
         backgroundColor={"#222534"}
         showGlobe={false}
         showAtmosphere={false}
-        htmlElementsData={countriesData}
+        htmlElementsData={countriesDataValues}
         htmlElement={addPopup}
       />
     </S.Container>

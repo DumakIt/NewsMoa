@@ -1,13 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
 import { INewsData, IUseGetNews } from "../types/hooksTypes";
-import { ICountriesData } from "../types/constantsTypes";
+import { ICountriesDataObj } from "../types/constantsTypes";
 
 export const useGetNews = (): IUseGetNews => {
   const [newsData, setNewsData] = useState<INewsData>([]);
   const [page, setPage] = useState(1);
 
-  const getData = async (countriesData: ICountriesData, pageSize: number) => {
+  const getData = async (
+    countriesData: ICountriesDataObj[],
+    pageSize: number,
+    search?: string,
+  ) => {
     try {
       // 매개변수로 받은 countriesData를 활용하여 뉴스 받기
       const fetchPromises = countriesData.map(async (el1) => {
@@ -18,6 +22,7 @@ export const useGetNews = (): IUseGetNews => {
           excludeDomains: el1.excludeDomains,
           pageSize,
           page,
+          q: search ? search : "",
         };
         const response = await axios.get(
           "https://newsomaticapi.com/apis/news/v1/all",
@@ -33,6 +38,7 @@ export const useGetNews = (): IUseGetNews => {
             country: el2.country,
             url: el2.url,
             publishedAt: el2.publishedAt,
+            countryName: el1.name,
           };
         });
         return processedData;

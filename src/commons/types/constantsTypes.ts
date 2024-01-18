@@ -7,4 +7,6 @@ export interface ICountriesDataObj {
   excludeDomains?: string;
 }
 
-export type ICountriesData = ICountriesDataObj[];
+export interface ICountriesData {
+  [key: string]: ICountriesDataObj;
+}

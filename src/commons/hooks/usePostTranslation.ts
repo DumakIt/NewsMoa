@@ -19,7 +19,13 @@ export const usePostTranslation = (newsData: INewsData) => {
           const data = {
             from: "auto",
             to: "ko",
-            common_protected_paths: ["image", "country", "url", "publishedAt"], // 해당 key는 번역 X
+            common_protected_paths: [
+              "image",
+              "country",
+              "url",
+              "publishedAt",
+              "countryName",
+            ], // 해당 key는 번역 X
             json: el,
           };
 
