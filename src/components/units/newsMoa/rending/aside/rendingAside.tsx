@@ -46,7 +46,11 @@ export default function RendingAside({
                   {el.title}
                 </S.Title>
               </div>
-              <S.TitleImg src={el.image} alt="뉴스 이미지" />
+              <S.TitleImg
+                referrerPolicy="no-referrer"
+                src={el.image}
+                alt="뉴스 이미지"
+              />
             </S.TitleWrapper>
           </S.NewsArticle>
         ))
