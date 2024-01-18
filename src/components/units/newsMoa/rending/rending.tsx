@@ -20,7 +20,7 @@ export default function Rending(): JSX.Element {
 
   useEffect(() => {
     // 렌더링시 뉴스 데이터 요청
-    getData(Object.values(countriesData), 3);
+    getData(Object.values(countriesData), 3, 1);
   }, []);
 
   return (

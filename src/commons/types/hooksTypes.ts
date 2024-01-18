@@ -17,6 +17,7 @@ export interface IUseGetNews {
   getData: (
     countriesData: ICountriesDataObj[],
     pageSize: number,
+    page: number,
     search?: string,
   ) => Promise<void>;
 }

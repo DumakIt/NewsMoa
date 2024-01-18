@@ -5,11 +5,11 @@ import { ICountriesDataObj } from "../types/constantsTypes";
 
 export const useGetNews = (): IUseGetNews => {
   const [newsData, setNewsData] = useState<INewsData>([]);
-  const [page, setPage] = useState(1);
 
   const getData = async (
     countriesData: ICountriesDataObj[],
     pageSize: number,
+    page: number,
     search?: string,
   ) => {
     try {
@@ -48,7 +48,6 @@ export const useGetNews = (): IUseGetNews => {
       const result = await Promise.all(fetchPromises);
 
       // 데이터 저장
-      setPage(page + 1);
       setNewsData(result);
     } catch (error) {
       if (error instanceof Error) {
