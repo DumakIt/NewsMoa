@@ -8,7 +8,7 @@ export const LoadingText = styled.p`
   font-size: 24px;
 `;
 
-export const Container = styled.div`
+export const Container = styled.main`
   position: relative;
   width: 100vw;
   height: 100vh;
