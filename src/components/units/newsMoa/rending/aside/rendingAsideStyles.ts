@@ -88,3 +88,8 @@ export const TitleImg = styled.img`
   border-radius: 10px;
   object-fit: cover;
 `;
+
+export const LoadingText = styled.p`
+  font-size: 24px;
+  font-weight: 700;
+`;

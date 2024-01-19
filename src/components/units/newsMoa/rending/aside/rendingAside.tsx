@@ -21,9 +21,7 @@ export default function RendingAside({
 
   return (
     <S.Container>
-      <div>
-        <S.RecentNews>RECENT NEWS</S.RecentNews>
-      </div>
+      <S.RecentNews>RECENT NEWS</S.RecentNews>
       {sortedNews.length !== 0 ? (
         sortedNews.map((el) => (
           <S.NewsArticle key={el.url}>
@@ -55,7 +53,7 @@ export default function RendingAside({
           </S.NewsArticle>
         ))
       ) : (
-        <h2>로딩중...</h2>
+        <S.LoadingText>로딩중...</S.LoadingText>
       )}
     </S.Container>
   );
