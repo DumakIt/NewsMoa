@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect } from "react";
+import { SyntheticEvent, useCallback, useEffect } from "react";
 import { useGetNews } from "../../../../../commons/hooks/useGetNews";
 import { usePostTranslation } from "../../../../../commons/hooks/usePostTranslation";
 import { countriesData } from "../../../../../commons/constants/countriesData";
@@ -28,6 +28,7 @@ export default function ListBody(): JSX.Element {
 
   const loadMore = () => {
     if (translateData[selectCountry] === undefined || isDataLoading) return;
+    // 무한스크롤 이벤트 발생시 현재 뉴스의 길이로 다음 뉴스 페이지 설정 및 요청
     getData(
       [countriesData[selectCountry]],
       10,

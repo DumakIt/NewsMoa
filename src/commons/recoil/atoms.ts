@@ -11,6 +11,11 @@ export const ListDataState = atom<ITranslateDataState>({
   default: {},
 });
 
+export const searchDataState = atom<ITranslateDataState>({
+  key: "searchDataState",
+  default: {},
+});
+
 export const selectCountryState = atom<string>({
   key: "selectCountryState",
   default: "kr",
@@ -19,4 +24,9 @@ export const selectCountryState = atom<string>({
 export const isDataLoadingState = atom({
   key: "isDataLoadingState",
   default: false,
+});
+
+export const searchState = atom({
+  key: "searchState",
+  default: "",
 });
