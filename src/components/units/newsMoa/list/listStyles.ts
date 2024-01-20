@@ -7,15 +7,3 @@ export const Container = styled.main`
   margin: auto;
   padding: 80px 20px 0;
 `;
-
-export const Body = styled.section`
-  width: 100%;
-  height: 500px;
-  border: 1px solid red;
-`;
-
-export const Side = styled.aside`
-  width: 300px;
-  height: 500px;
-  border: 1px solid red;
-`;
