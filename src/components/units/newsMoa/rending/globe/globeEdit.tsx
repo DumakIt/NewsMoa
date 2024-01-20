@@ -69,6 +69,7 @@ export default function GlobeEdit({
           ${
             translateData[data.country]
               ? translateData[data.country]
+                  .slice(0, 3)
                   .map(
                     (el) =>
                       `<p class="popupTitle hasData" id=${el.url} key=${el.url}>${el.title}</p>`,

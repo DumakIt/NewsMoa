@@ -1,3 +1,5 @@
+import { isDataLoadingState } from "./../recoil/atoms";
+import { useRecoilState } from "recoil";
 import { useState } from "react";
 import axios from "axios";
 import { INewsData, IUseGetNews } from "../types/hooksTypes";
@@ -5,6 +7,7 @@ import { ICountriesDataObj } from "../types/constantsTypes";
 
 export const useGetNews = (): IUseGetNews => {
   const [newsData, setNewsData] = useState<INewsData>([]);
+  const [_, setIsDataLoading] = useRecoilState(isDataLoadingState);
 
   const getData = async (
     countriesData: ICountriesDataObj[],
@@ -13,6 +16,7 @@ export const useGetNews = (): IUseGetNews => {
     search?: string,
   ) => {
     try {
+      setIsDataLoading(true);
       // 매개변수로 받은 countriesData를 활용하여 뉴스 받기
       const fetchPromises = countriesData.map(async (el1) => {
         const params = {
@@ -46,11 +50,11 @@ export const useGetNews = (): IUseGetNews => {
 
       // Promise.all을 이용하여 한번에 모든 결과 받기
       const result = await Promise.all(fetchPromises);
-
       // 데이터 저장
       setNewsData(result);
     } catch (error) {
       if (error instanceof Error) {
+        setIsDataLoading(false);
         alert(error.message);
       }
     }

@@ -1,5 +1,5 @@
 import { IRendingAsideProps } from "./rendingAsideTypes";
-import { MouseEvent, useMemo } from "react";
+import { SyntheticEvent, useMemo } from "react";
 import { useRouterMovePage } from "../../../../../commons/hooks/useRouterMovePage";
 import * as S from "./rendingAsideStyles";
 
@@ -48,6 +48,9 @@ export default function RendingAside({
                 referrerPolicy="no-referrer"
                 src={el.image}
                 alt="뉴스 이미지"
+                onError={(event: SyntheticEvent<HTMLImageElement, Event>) =>
+                  (event.currentTarget.src = "/logoWhite.svg")
+                }
               />
             </S.TitleWrapper>
           </S.NewsArticle>

@@ -7,7 +7,6 @@ export const HeaderContainer = styled.header`
   align-items: center;
   height: 70px;
   padding: 0 48px;
-  background-color: #222534;
 
   & > div:last-child {
     width: 220px;

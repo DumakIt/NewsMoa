@@ -1,5 +1,5 @@
-import { ITranslateData } from "../../../../../commons/types/hooksTypes";
+import { ITranslateDataState } from "../../../../../commons/types/atomsTypes";
 
 export interface IGlobeEditProps {
-  translateData: ITranslateData;
+  translateData: ITranslateDataState;
 }

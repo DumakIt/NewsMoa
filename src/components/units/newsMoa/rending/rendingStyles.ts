@@ -12,7 +12,6 @@ export const Container = styled.main`
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #222534;
 `;
 
 export const NavWrapper = styled.nav`

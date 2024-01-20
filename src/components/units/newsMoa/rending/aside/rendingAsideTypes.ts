@@ -1,6 +1,5 @@
-import { ReactNode } from "react";
-import { ITranslateData } from "../../../../../commons/types/hooksTypes";
+import { ITranslateDataState } from "../../../../../commons/types/atomsTypes";
 
 export interface IRendingAsideProps {
-  translateData: ITranslateData;
+  translateData: ITranslateDataState;
 }

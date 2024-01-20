@@ -16,10 +16,12 @@ const Globe = dynamic(
 
 export default function Rending(): JSX.Element {
   const { newsData, getData } = useGetNews();
-  const translateData = usePostTranslation(newsData);
+  const translateData = usePostTranslation(newsData, "rending");
 
   useEffect(() => {
-    // 렌더링시 뉴스 데이터 요청
+    if (Object.keys(translateData).length !== 0) return;
+
+    // 렌더링시 뉴스 데이터 없을시 요청
     getData(Object.values(countriesData), 3, 1);
   }, []);
 

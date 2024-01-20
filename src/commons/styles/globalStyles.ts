@@ -6,4 +6,10 @@ export const globalStyles = css`
     margin: 0px;
     padding: 0px;
   }
+
+  html,
+  body {
+    height: 100%;
+    background-color: #222534;
+  }
 `;

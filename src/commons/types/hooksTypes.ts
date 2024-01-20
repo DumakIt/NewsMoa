@@ -22,10 +22,6 @@ export interface IUseGetNews {
   ) => Promise<void>;
 }
 
-export interface ITranslateData {
-  [key: string]: INewsDataObj[];
-}
-
 export interface IUseRouterMovePage {
   onClickMovePage: (path: string) => () => void;
   routerMovePage: (path: string) => void;

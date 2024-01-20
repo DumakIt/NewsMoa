@@ -15,12 +15,15 @@
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "react-globe.gl": "^2.27.1"
+    "react-globe.gl": "^2.27.1",
+    "react-infinite-scroller": "^1.2.6",
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
     "@types/node": "^20.10.7",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
+    "@types/react-infinite-scroller": "^1.2.5",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^9.1.0",

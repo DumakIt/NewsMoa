@@ -1,9 +1,17 @@
+import {
+  RendingDataState,
+  ListDataState,
+  isDataLoadingState,
+} from "./../recoil/atoms";
+import { useRecoilState } from "recoil";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { INewsData, ITranslateData } from "../types/hooksTypes";
+import { useEffect } from "react";
+import { INewsData } from "../types/hooksTypes";
 
-export const usePostTranslation = (newsData: INewsData) => {
-  const [translateData, setTranslateData] = useState<ITranslateData>({});
+export const usePostTranslation = (newsData: INewsData, pageRoot: string) => {
+  const [rendingData, setRendingData] = useRecoilState(RendingDataState);
+  const [listData, setListData] = useRecoilState(ListDataState);
+  const [_, setIsDataLoading] = useRecoilState(isDataLoadingState);
 
   useEffect(() => {
     const postTranslation = async () => {
@@ -47,8 +55,11 @@ export const usePostTranslation = (newsData: INewsData) => {
         // Promise.all을 이용하여 한번에 모든 결과 받기
         const result = await Promise.all(fetchPromises);
 
+        // pageRoot에 따라 저장 state 변경
+        const setData = pageRoot === "rending" ? setRendingData : setListData;
+
         // 국가 키에 데이터가 있으면 추가 없으면 키를 생성해서 저장
-        setTranslateData((prev) => {
+        setData((prev) => {
           // 새로운 데이터를 추가할 새로운 객체 생성
           const newData = { ...prev };
 
@@ -64,8 +75,10 @@ export const usePostTranslation = (newsData: INewsData) => {
 
           return newData;
         });
+        setIsDataLoading(false);
       } catch (error) {
         if (error instanceof Error) {
+          setIsDataLoading(false);
           alert(error.message);
         }
       }
@@ -74,5 +87,5 @@ export const usePostTranslation = (newsData: INewsData) => {
     postTranslation();
   }, [newsData]);
 
-  return translateData;
+  return pageRoot === "rending" ? rendingData : listData;
 };
