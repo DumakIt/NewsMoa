@@ -13,7 +13,7 @@ export default function SearchBar01(): JSX.Element {
     if (event.key !== "Enter" || value?.trim() === search) return;
 
     if (value !== undefined && (value?.trim() !== "" || value === "")) {
-      // isSearch 변경하여 뉴스검색으로 변경
+      // 검색어가 띄어쓰기만 있는지 확인 후 검색어 저장
       setSearch(value);
       return;
     }
