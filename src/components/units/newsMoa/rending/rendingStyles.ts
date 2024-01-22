@@ -10,8 +10,8 @@ export const LoadingText = styled.p`
 
 export const Container = styled.main`
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 `;
 
 export const NavWrapper = styled.nav`

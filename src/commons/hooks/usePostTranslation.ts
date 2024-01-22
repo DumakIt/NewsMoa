@@ -2,90 +2,99 @@ import {
   RendingDataState,
   ListDataState,
   isDataLoadingState,
+  searchDataState,
+  searchState,
 } from "./../recoil/atoms";
-import { useRecoilState } from "recoil";
+import { SetterOrUpdater, useRecoilState } from "recoil";
 import axios from "axios";
-import { useEffect } from "react";
 import { INewsData } from "../types/hooksTypes";
+import { ITranslateDataState } from "../types/atomsTypes";
 
-export const usePostTranslation = (newsData: INewsData, pageRoot: string) => {
-  const [rendingData, setRendingData] = useRecoilState(RendingDataState);
-  const [listData, setListData] = useRecoilState(ListDataState);
-  const [_, setIsDataLoading] = useRecoilState(isDataLoadingState);
+export const usePostTranslation = () => {
+  const [, setRendingData] = useRecoilState(RendingDataState);
+  const [, setListData] = useRecoilState(ListDataState);
+  const [, setSearchData] = useRecoilState(searchDataState);
+  const [, setIsDataLoading] = useRecoilState(isDataLoadingState);
+  const [search] = useRecoilState(searchState);
 
-  useEffect(() => {
-    const postTranslation = async () => {
-      try {
-        // newsData가 없으면 종료
-        if (newsData.length === 0) return;
+  const updateData = (
+    setData: SetterOrUpdater<ITranslateDataState>,
+    result: any[],
+    isSearch: boolean,
+  ) => {
+    setData((prev) => {
+      const newData = { ...prev };
 
-        // post를 위한 data 및 headers 작성 후 한국어로 번역 요청
-        const fetchPromises = newsData.map(async (el: any[]) => {
-          // 한국어는 번역할 필요가 없으니 return
-          if (el[0].country === "kr") return el;
+      result.forEach((el) => {
+        // isSearch가 true이면 국가 코드 + search를 키로 사용하고,
+        // false이면 국가 코드(el[0].country)를 키로 사용
+        const key = isSearch ? el[0].country + search : el[0].country;
 
-          const data = {
-            from: "auto",
-            to: "ko",
-            common_protected_paths: [
-              "image",
-              "country",
-              "url",
-              "publishedAt",
-              "countryName",
-            ], // 해당 key는 번역 X
-            json: el,
-          };
+        //해당 키가 이미 newData에 존재하는지 확인 및 있으면 데이터 추가 없으면 만들기
+        newData[key] = newData[key] ? [...newData[key], ...el] : el;
+      });
 
-          const headers = {
-            "content-type": "application/x-www-form-urlencoded",
-            "X-RapidAPI-Key": process.env.NEXT_PUBLIC_X_RAPID_API_KEY,
-            "X-RapidAPI-Host": "google-translate113.p.rapidapi.com",
-          };
+      return newData;
+    });
+  };
 
-          const response = await axios.post(
-            "https://google-translate113.p.rapidapi.com/api/v1/translator/json",
-            data,
-            { headers },
-          );
+  const postTranslation = async (newsData: INewsData, path: string) => {
+    try {
+      // newsData가 없으면 종료
+      if (newsData.length === 0) return;
 
-          return response.data.trans;
-        });
+      // post를 위한 data 및 headers 작성 후 한국어로 번역 요청
+      const fetchPromises = newsData.map(async (el: any[]) => {
+        // 한국어는 번역할 필요가 없으니 return
+        if (el[0].country === "kr") return el;
 
-        // Promise.all을 이용하여 한번에 모든 결과 받기
-        const result = await Promise.all(fetchPromises);
+        const data = {
+          from: "auto",
+          to: "ko",
+          common_protected_paths: [
+            "image",
+            "country",
+            "url",
+            "publishedAt",
+            "countryName",
+          ], // 해당 key는 번역 X
+          json: el,
+        };
 
-        // pageRoot에 따라 저장 state 변경
-        const setData = pageRoot === "rending" ? setRendingData : setListData;
+        const headers = {
+          "content-type": "application/x-www-form-urlencoded",
+          "X-RapidAPI-Key": process.env.NEXT_PUBLIC_X_RAPID_API_KEY,
+          "X-RapidAPI-Host": "google-translate113.p.rapidapi.com",
+        };
 
-        // 국가 키에 데이터가 있으면 추가 없으면 키를 생성해서 저장
-        setData((prev) => {
-          // 새로운 데이터를 추가할 새로운 객체 생성
-          const newData = { ...prev };
+        const response = await axios.post(
+          "https://google-translate113.p.rapidapi.com/api/v1/translator/json",
+          data,
+          { headers },
+        );
 
-          // result 배열을 순회하면서 데이터를 적절한 국가 키에 추가
-          result.forEach((el) => {
-            const country = el[0].country;
+        return response.data.trans;
+      });
 
-            // 해당 국가 키가 이미 newData에 존재하는지 확인
-            newData[country] = newData[country]
-              ? [...newData[country], ...el] // 이미 존재한다면 새로운 데이터를 기존 배열에 추가
-              : el; // 존재하지 않는다면 새로운 배열을 만들어 추가
-          });
+      // Promise.all을 이용하여 한번에 모든 결과 받기
+      const result = await Promise.all(fetchPromises);
 
-          return newData;
-        });
-        setIsDataLoading(false);
-      } catch (error) {
-        if (error instanceof Error) {
-          setIsDataLoading(false);
-          alert(error.message);
-        }
+      // path에 따라서 데이터 저장위치 변경
+      if (path === "search") {
+        updateData(setSearchData, result, true);
+      } else {
+        const setData = path === "rending" ? setRendingData : setListData;
+        updateData(setData, result, false);
       }
-    };
 
-    postTranslation();
-  }, [newsData]);
+      setIsDataLoading(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        setIsDataLoading(false);
+        alert("문제가 발생하였습니다\n잠시 후 다시 시도해 주세요.");
+      }
+    }
+  };
 
-  return pageRoot === "rending" ? rendingData : listData;
+  return { postTranslation };
 };

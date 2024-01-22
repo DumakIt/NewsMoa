@@ -9,6 +9,8 @@ export const globalStyles = css`
 
   html,
   body {
+    width: 100%;
+    min-width: 480px;
     height: 100%;
     background-color: #222534;
   }

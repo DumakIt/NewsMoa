@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const Container = styled.section`
   position: relative;
-  width: calc(100% - 250px);
+  width: 100%;
   padding: 0 20px;
 `;
 
@@ -43,6 +43,10 @@ export const NewsTitle = styled.h2`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
 `;
 
 export const NewsDescription = styled.p`
@@ -55,6 +59,10 @@ export const NewsDescription = styled.p`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+
+  @media (max-width: 480px) {
+    font-size: 18px;
+  }
 `;
 
 export const LoadingText = styled.p`

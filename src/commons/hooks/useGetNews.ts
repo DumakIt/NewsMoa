@@ -1,15 +1,17 @@
-import { isDataLoadingState } from "./../recoil/atoms";
+import { hasMoreState, isDataLoadingState } from "./../recoil/atoms";
 import { useRecoilState } from "recoil";
-import { useState } from "react";
 import axios from "axios";
-import { INewsData, IUseGetNews } from "../types/hooksTypes";
+import { IUseGetNews } from "../types/hooksTypes";
 import { ICountriesDataObj } from "../types/constantsTypes";
+import { usePostTranslation } from "./usePostTranslation";
 
 export const useGetNews = (): IUseGetNews => {
-  const [newsData, setNewsData] = useState<INewsData>([]);
-  const [_, setIsDataLoading] = useRecoilState(isDataLoadingState);
+  const [, setIsDataLoading] = useRecoilState(isDataLoadingState);
+  const [, setHasMore] = useRecoilState(hasMoreState);
+  const { postTranslation } = usePostTranslation();
 
   const getData = async (
+    path: string,
     countriesData: ICountriesDataObj[],
     pageSize: number,
     page: number,
@@ -50,15 +52,25 @@ export const useGetNews = (): IUseGetNews => {
 
       // Promise.all을 이용하여 한번에 모든 결과 받기
       const result = await Promise.all(fetchPromises);
-      // 데이터 저장
-      setNewsData(result);
+
+      if (result[0].length === 0 && search) {
+        setHasMore(false);
+        alert(
+          "검색 결과가 없습니다\n검색어를 현재 국가 언어에 맞춰서 해주세요",
+        );
+        return;
+      }
+
+      // 번역 API 요청
+      postTranslation(result, path);
     } catch (error) {
       if (error instanceof Error) {
         setIsDataLoading(false);
-        alert(error.message);
+        setHasMore(false);
+        alert("문제가 발생하였습니다\n잠시 후 다시 시도해 주세요.");
       }
     }
   };
 
-  return { newsData, getData };
+  return { getData };
 };

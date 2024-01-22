@@ -7,7 +7,7 @@ export const countriesData: ICountriesData = {
     lat: 35.907757,
     lng: 127.766922,
     name: "대한민국",
-    excludeDomains: "",
+    excludeDomains: "Hani.co.kr",
   },
   us: {
     country: "us",

@@ -30,3 +30,18 @@ export const searchState = atom({
   key: "searchState",
   default: "",
 });
+
+export const isSearchState = atom({
+  key: "isSearchState",
+  default: false,
+});
+
+export const hasMoreState = atom({
+  key: "hasMoreState",
+  default: true,
+});
+
+export const isHamburgerState = atom({
+  key: "hamburgerState",
+  default: false,
+});

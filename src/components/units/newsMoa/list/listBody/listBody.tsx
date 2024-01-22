@@ -1,10 +1,14 @@
-import { SyntheticEvent, useCallback, useEffect } from "react";
+import { SyntheticEvent, useEffect } from "react";
 import { useGetNews } from "../../../../../commons/hooks/useGetNews";
-import { usePostTranslation } from "../../../../../commons/hooks/usePostTranslation";
 import { countriesData } from "../../../../../commons/constants/countriesData";
 import { useRecoilState } from "recoil";
 import {
+  ListDataState,
+  hasMoreState,
   isDataLoadingState,
+  isSearchState,
+  searchDataState,
+  searchState,
   selectCountryState,
 } from "../../../../../commons/recoil/atoms";
 import { useRouterMovePage } from "../../../../../commons/hooks/useRouterMovePage";
@@ -13,38 +17,75 @@ import * as S from "./listBodyStyles";
 
 export default function ListBody(): JSX.Element {
   const { onClickMovePage } = useRouterMovePage();
-  const { newsData, getData } = useGetNews();
-  const translateData = usePostTranslation(newsData, "list");
+  const { getData } = useGetNews();
+  const [listData] = useRecoilState(ListDataState);
+  const [searchData] = useRecoilState(searchDataState);
   const [selectCountry] = useRecoilState(selectCountryState);
   const [isDataLoading] = useRecoilState(isDataLoadingState);
+  const [search] = useRecoilState(searchState);
+  const [isSearch] = useRecoilState(isSearchState);
+  const [hasMore, setHasMore] = useRecoilState(hasMoreState);
 
   useEffect(() => {
-    if (translateData[selectCountry] !== undefined) {
+    setHasMore(true);
+    if (listData[selectCountry] === undefined && !isSearch) {
+      // 렌더링 및 선택 국가 뉴스 데이터가 없을 경우 요청
+      getData("list", [countriesData[selectCountry]], 10, 1);
       return;
     }
-    // 렌더링시 뉴스 데이터가 없을 경우 요청
-    getData([countriesData[selectCountry]], 10, 1);
-  }, [selectCountry]);
+
+    if (searchData[selectCountry + search] === undefined && isSearch) {
+      // 검색시 뉴스 데이터가 없을 경우 요청
+      getData("search", [countriesData[selectCountry]], 10, 1, search);
+      return;
+    }
+  }, [selectCountry, search]);
 
   const loadMore = () => {
-    if (translateData[selectCountry] === undefined || isDataLoading) return;
-    // 무한스크롤 이벤트 발생시 현재 뉴스의 길이로 다음 뉴스 페이지 설정 및 요청
-    getData(
-      [countriesData[selectCountry]],
-      10,
-      translateData[selectCountry]?.length / 10 + 1,
-    );
+    // 무한스크롤 이벤트 페이지는 소수점 올림(해당 뉴스의 길이 / 10) + 1
+    if (listData[selectCountry] !== undefined && !isDataLoading && !isSearch) {
+      // 검색이 아닌 경우
+      getData(
+        "list",
+        [countriesData[selectCountry]],
+        10,
+        Math.ceil(listData[selectCountry]?.length / 10) + 1,
+      );
+      return;
+    }
+
+    if (
+      searchData[selectCountry + search] !== undefined &&
+      !isDataLoading &&
+      isSearch
+    ) {
+      // 검색인 경우
+      getData(
+        "search",
+        [countriesData[selectCountry]],
+        10,
+        Math.ceil(searchData[selectCountry + search]?.length / 10) + 1,
+        search,
+      );
+      return;
+    }
   };
 
   return (
     <S.Container>
       <S.SelectCountry>{countriesData[selectCountry].name}</S.SelectCountry>
       <InfiniteScroll
-        hasMore={true}
+        initialLoad={false}
+        hasMore={hasMore}
         loadMore={loadMore}
-        loader={<S.LoadingText>뉴스 로딩중...</S.LoadingText>}
+        loader={
+          <S.LoadingText key={"InfiniteScroll"}>뉴스 로딩중...</S.LoadingText>
+        }
       >
-        {translateData[selectCountry]?.map((el) => (
+        {(search
+          ? searchData[selectCountry + search]
+          : listData[selectCountry]
+        )?.map((el) => (
           <S.NewsArticle
             key={el.url}
             onClick={
@@ -68,7 +109,7 @@ export default function ListBody(): JSX.Element {
               <S.NewsDescription>{el.description}</S.NewsDescription>
             </div>
           </S.NewsArticle>
-        ))}
+        )) ?? <></>}
       </InfiniteScroll>
     </S.Container>
   );

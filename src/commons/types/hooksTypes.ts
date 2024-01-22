@@ -13,8 +13,8 @@ export interface INewsDataObj {
 export type INewsData = INewsDataObj[][];
 
 export interface IUseGetNews {
-  newsData: INewsData;
   getData: (
+    path: "rending" | "list" | "search",
     countriesData: ICountriesDataObj[],
     pageSize: number,
     page: number,

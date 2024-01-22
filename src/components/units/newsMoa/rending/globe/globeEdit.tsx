@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import * as S from "./globeEditStyles";
 
 export default function GlobeEdit({
-  translateData,
+  rendingData,
 }: IGlobeEditProps): JSX.Element {
   const router = useRouter();
   const globeRef = useRef<GlobeMethods>();
@@ -67,8 +67,8 @@ export default function GlobeEdit({
           </div>
           <p class="popupRecent">최근 뉴스</p>
           ${
-            translateData[data.country]
-              ? translateData[data.country]
+            rendingData[data.country]
+              ? rendingData[data.country]
                   .slice(0, 3)
                   .map(
                     (el) =>
@@ -100,7 +100,7 @@ export default function GlobeEdit({
 
       return el;
     },
-    [translateData],
+    [rendingData],
   );
 
   return (

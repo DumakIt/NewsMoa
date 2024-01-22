@@ -2,9 +2,14 @@ import styled from "@emotion/styled";
 import { ICountryWrapperProps } from "./listAsideTypes";
 
 export const Container = styled.aside`
+  display: block;
   width: 250px;
   padding-left: 20px;
   border-left: 1px solid #ffffff33;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 export const CountryWrapper = styled.div`

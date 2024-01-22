@@ -5,12 +5,10 @@ export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  min-width: 480px;
   height: 70px;
-  padding: 0 48px;
-
-  & > div:last-child {
-    width: 220px;
-  }
+  padding: 0 4%;
 `;
 
 export const FuncWrapper = styled.div`
@@ -28,6 +26,10 @@ export const LogoLink = styled(Link)`
 export const NavBar = styled.nav`
   display: flex;
   margin-left: 60px;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 export const NavLink = styled(Link)`
@@ -42,6 +44,23 @@ export const NavLink = styled(Link)`
   }
 `;
 
-export const SSS = styled.nav`
-  width: 700px;
+export const SearchWrapper = styled.div`
+  display: block;
+  width: 220px;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+export const HamburgerWrapper = styled.div`
+  display: none;
+
+  @media (max-width: 1024px) {
+    display: block;
+  }
+  & > img {
+    width: 30px;
+    height: 30px;
+  }
 `;

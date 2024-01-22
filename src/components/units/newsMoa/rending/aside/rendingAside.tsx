@@ -4,20 +4,20 @@ import { useRouterMovePage } from "../../../../../commons/hooks/useRouterMovePag
 import * as S from "./rendingAsideStyles";
 
 export default function RendingAside({
-  translateData,
+  rendingData,
 }: IRendingAsideProps): JSX.Element {
   const { onClickMovePage } = useRouterMovePage();
 
   // 받은 데이터를 최근순으로 변경
   const sortedNews = useMemo(() => {
-    return Object.values(translateData)
+    return Object.values(rendingData)
       .flat()
       .sort((a, b) => {
         const dateA = new Date(a.publishedAt).getTime();
         const dateB = new Date(b.publishedAt).getTime();
         return dateB - dateA;
       });
-  }, [translateData]);
+  }, [rendingData]);
 
   return (
     <S.Container>
