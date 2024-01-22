@@ -54,6 +54,7 @@ export const useGetNews = (): IUseGetNews => {
       const result = await Promise.all(fetchPromises);
 
       if (result[0].length === 0 && search) {
+        setIsDataLoading(false);
         setHasMore(false);
         alert(
           "검색 결과가 없습니다\n검색어를 현재 국가 언어에 맞춰서 해주세요",

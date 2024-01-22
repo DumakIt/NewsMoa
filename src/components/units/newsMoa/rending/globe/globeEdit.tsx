@@ -4,6 +4,7 @@ import { countriesHex } from "../../../../../commons/constants/countriesHex";
 import { countriesData } from "../../../../../commons/constants/countriesData";
 import { IGlobeEditProps } from "./globeEditTypes";
 import { useRouter } from "next/router";
+import { useWindowSize } from "@react-hook/window-size/throttled";
 import * as S from "./globeEditStyles";
 
 export default function GlobeEdit({
@@ -12,6 +13,7 @@ export default function GlobeEdit({
   const router = useRouter();
   const globeRef = useRef<GlobeMethods>();
   const [popup, setPopup] = useState(false);
+  const [width, height] = useWindowSize();
 
   useEffect(() => {
     if (!globeRef?.current) return;
@@ -107,6 +109,8 @@ export default function GlobeEdit({
     <S.Container>
       <Globe
         ref={globeRef}
+        width={width > 480 ? width : 480}
+        height={height}
         labelsData={countriesDataValues}
         labelText={useCallback(() => "", [])}
         labelDotRadius={useCallback(() => 2, [])}

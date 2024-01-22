@@ -45,7 +45,7 @@ export const Container = styled.div`
 
   & .popupRecent {
     margin-bottom: 12px;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bolder;
     color: rgba(0, 0, 0, 0.2);
   }
@@ -53,7 +53,7 @@ export const Container = styled.div`
   & .popupTitle {
     position: relative;
     padding-left: 14px;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     text-overflow: ellipsis;
     overflow: hidden;

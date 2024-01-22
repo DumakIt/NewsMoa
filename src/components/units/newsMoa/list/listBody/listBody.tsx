@@ -6,7 +6,7 @@ import {
   ListDataState,
   hasMoreState,
   isDataLoadingState,
-  isSearchState,
+  isHamburgerState,
   searchDataState,
   searchState,
   selectCountryState,
@@ -23,18 +23,20 @@ export default function ListBody(): JSX.Element {
   const [selectCountry] = useRecoilState(selectCountryState);
   const [isDataLoading] = useRecoilState(isDataLoadingState);
   const [search] = useRecoilState(searchState);
-  const [isSearch] = useRecoilState(isSearchState);
   const [hasMore, setHasMore] = useRecoilState(hasMoreState);
+  const [isHamburger, setISHamburger] = useRecoilState(isHamburgerState);
 
   useEffect(() => {
     setHasMore(true);
-    if (listData[selectCountry] === undefined && !isSearch) {
+    if (listData[selectCountry] === undefined && !search) {
       // 렌더링 및 선택 국가 뉴스 데이터가 없을 경우 요청
       getData("list", [countriesData[selectCountry]], 10, 1);
       return;
     }
 
-    if (searchData[selectCountry + search] === undefined && isSearch) {
+    if (searchData[selectCountry + search] === undefined && search) {
+      // 햄버거 메뉴가 열려 있을시 닫기
+      if (isHamburger === true) setISHamburger(false);
       // 검색시 뉴스 데이터가 없을 경우 요청
       getData("search", [countriesData[selectCountry]], 10, 1, search);
       return;
@@ -43,8 +45,9 @@ export default function ListBody(): JSX.Element {
 
   const loadMore = () => {
     // 무한스크롤 이벤트 페이지는 소수점 올림(해당 뉴스의 길이 / 10) + 1
-    if (listData[selectCountry] !== undefined && !isDataLoading && !isSearch) {
+    if (listData[selectCountry] !== undefined && !isDataLoading && !search) {
       // 검색이 아닌 경우
+
       getData(
         "list",
         [countriesData[selectCountry]],
@@ -57,7 +60,7 @@ export default function ListBody(): JSX.Element {
     if (
       searchData[selectCountry + search] !== undefined &&
       !isDataLoading &&
-      isSearch
+      search
     ) {
       // 검색인 경우
       getData(

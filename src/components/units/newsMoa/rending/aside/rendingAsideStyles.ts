@@ -5,6 +5,7 @@ export const Container = styled.aside`
   top: 50%;
   right: 0;
   transform: translateY(-50%);
+  display: block;
   width: 320px;
   height: 624px;
   padding-right: 35px;
@@ -28,6 +29,10 @@ export const Container = styled.aside`
 
   &::-webkit-scrollbar-track {
     background: #49c0b00d;
+  }
+
+  @media (max-width: 1024px) {
+    display: none;
   }
 `;
 

@@ -5,7 +5,7 @@ export const LoadingText = styled.p`
   text-align: center;
   line-height: 100vh;
   color: #239788;
-  font-size: 24px;
+  font-size: 30px;
 `;
 
 export const Container = styled.main`
@@ -21,10 +21,15 @@ export const NavWrapper = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 200px;
+
+  @media (max-width: 1024px) {
+    width: 150px;
+  }
 `;
 
 export const LogoImg = styled.img`
-  width: 200px;
+  width: 100%;
   margin-bottom: 20px;
 `;
 
@@ -43,5 +48,11 @@ export const NewsList = styled(Link)`
   &:hover {
     color: black;
     background-color: white;
+  }
+
+  @media (max-width: 480px) {
+    height: 30px;
+    line-height: 30px;
+    font-size: 18px;
   }
 `;
