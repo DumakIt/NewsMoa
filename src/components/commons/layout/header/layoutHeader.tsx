@@ -1,10 +1,12 @@
 import { useRecoilState } from "recoil";
 import SearchBar01 from "../../searchBar/01/searchBar01";
 import { isHamburgerState } from "../../../../commons/recoil/atoms";
+import { useSearchBar } from "../../../../commons/hooks/useSearchBar";
 import * as S from "./layoutHeaderStyles";
 
 export default function LayoutHeader(): JSX.Element {
   const [, setISHamburger] = useRecoilState(isHamburgerState);
+  const { inputRef, onInputKeyPress } = useSearchBar();
 
   const onClickHamburger = () => {
     setISHamburger(true);
@@ -20,7 +22,7 @@ export default function LayoutHeader(): JSX.Element {
         </S.NavBar>
       </S.FuncWrapper>
       <S.SearchWrapper>
-        <SearchBar01 />
+        <SearchBar01 inputRef={inputRef} onInputKeyPress={onInputKeyPress} />
       </S.SearchWrapper>
       <S.HamburgerWrapper>
         <img

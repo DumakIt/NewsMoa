@@ -6,13 +6,15 @@ import {
 } from "../../../../commons/recoil/atoms";
 import { countriesData } from "../../../../commons/constants/countriesData";
 import { MouseEvent, useEffect } from "react";
-import * as S from "./hamburgerMenuStyles";
 import { useRouter } from "next/router";
 import { useRouterMovePage } from "../../../../commons/hooks/useRouterMovePage";
+import { useSearchBar } from "../../../../commons/hooks/useSearchBar";
+import * as S from "./hamburgerMenuStyles";
 
 export default function HamburgerMenu(): JSX.Element {
   const router = useRouter();
   const { routerMovePage } = useRouterMovePage();
+  const { inputRef, onInputKeyPress } = useSearchBar();
   const [, setSelectCountry] = useRecoilState(selectCountryState);
   const [isHamburger, setISHamburger] = useRecoilState(isHamburgerState);
 
@@ -45,7 +47,9 @@ export default function HamburgerMenu(): JSX.Element {
         onClick={onClickClose}
       />
       <S.NavWrapper>
-        {router.asPath === "/list" && <SearchBar01 />}
+        {router.asPath === "/list" && (
+          <SearchBar01 inputRef={inputRef} onInputKeyPress={onInputKeyPress} />
+        )}
         <S.NavLink href={"/"}>HOME</S.NavLink>
         <S.ListText>LIST</S.ListText>
         {Object.values(countriesData).map((el) => (
