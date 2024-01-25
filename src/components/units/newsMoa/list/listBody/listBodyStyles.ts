@@ -44,8 +44,8 @@ export const NewsTitle = styled.h2`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 
-  @media (max-width: 480px) {
-    font-size: 24px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
   }
 `;
 
