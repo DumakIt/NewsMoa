@@ -5,6 +5,7 @@ import { countriesData } from "../../../../../commons/constants/countriesData";
 import { IGlobeEditProps } from "./globeEditTypes";
 import { useRouter } from "next/router";
 import { useWindowSize } from "@react-hook/window-size/throttled";
+import DOMPurify from "dompurify";
 import * as S from "./globeEditStyles";
 
 export default function GlobeEdit({
@@ -59,28 +60,28 @@ export default function GlobeEdit({
     (data: any) => {
       setPopup(false);
       const el = document.createElement("div");
-      el.insertAdjacentHTML(
-        "afterbegin",
+
+      el.innerHTML = DOMPurify.sanitize(
         `<div id="${data.country}" class="popupContainer">
-        <div class="popupWrapper">
-          <div class="popupCountry">
-            <p>${data.name}</p>
-              <img src="/flags/${data.country}.svg" alt="국기 이미지" />
+          <div class="popupWrapper">
+            <div class="popupCountry">
+              <p>${data.name}</p>
+                <img src="/flags/${data.country}.svg" alt="국기 이미지" />
+            </div>
+            <p class="popupRecent">최근 뉴스</p>
+            ${
+              rendingData[data.country]
+                ? rendingData[data.country]
+                    .slice(0, 3)
+                    .map(
+                      (el) =>
+                        `<p class="popupTitle hasData" id=${el.url} key=${el.url}>${el.title}</p>`,
+                    )
+                    .join("")
+                : `<p class="popupTitle">로딩중...</p>`
+            }
           </div>
-          <p class="popupRecent">최근 뉴스</p>
-          ${
-            rendingData[data.country]
-              ? rendingData[data.country]
-                  .slice(0, 3)
-                  .map(
-                    (el) =>
-                      `<p class="popupTitle hasData" id=${el.url} key=${el.url}>${el.title}</p>`,
-                  )
-                  .join("")
-              : `<p class="popupTitle">로딩중...</p>`
-          }
-        </div>
-      </div>`,
+        </div>`,
       );
 
       // popupContainer에 마우스 이벤트 할당
