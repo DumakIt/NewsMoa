@@ -7,7 +7,8 @@ export const countriesData: ICountriesData = {
     lat: 35.907757,
     lng: 127.766922,
     name: "대한민국",
-    excludeDomains: "Hani.co.kr",
+    excludeDomains:
+      "Hani.co.kr, Paxetv.com, Bodnara.co.kr, Mt.co.kr, NewsTomato",
   },
   us: {
     country: "us",
@@ -23,7 +24,7 @@ export const countriesData: ICountriesData = {
     lat: 36.204824,
     lng: 138.252924,
     name: "일본",
-    excludeDomains: "Nikkei.com, Yomiuri.co.jp",
+    excludeDomains: "Nikkei.com, Yomiuri.co.jp, Sanspo.com",
   },
   zh: {
     country: "zh",
@@ -31,7 +32,7 @@ export const countriesData: ICountriesData = {
     lat: 35.86166,
     lng: 104.195397,
     name: "중국",
-    excludeDomains: "",
+    excludeDomains: "Gamereactor.cn, People.com.cn, Dzwww.com, HeraldCorp",
   },
   gb: {
     country: "gb",

@@ -3,8 +3,10 @@ import SearchBar01 from "../../searchBar/01/searchBar01";
 import { isHamburgerState } from "../../../../commons/recoil/atoms";
 import { useSearchBar } from "../../../../commons/hooks/useSearchBar";
 import * as S from "./layoutHeaderStyles";
+import { useRouter } from "next/router";
 
 export default function LayoutHeader(): JSX.Element {
+  const router = useRouter();
   const [, setISHamburger] = useRecoilState(isHamburgerState);
   const { inputRef, onInputKeyPress } = useSearchBar();
 
@@ -21,9 +23,11 @@ export default function LayoutHeader(): JSX.Element {
           <S.NavLink href={"/list"}>LIST</S.NavLink>
         </S.NavBar>
       </S.FuncWrapper>
-      <S.SearchWrapper>
-        <SearchBar01 inputRef={inputRef} onInputKeyPress={onInputKeyPress} />
-      </S.SearchWrapper>
+      {router.asPath === "/list" && (
+        <S.SearchWrapper>
+          <SearchBar01 inputRef={inputRef} onInputKeyPress={onInputKeyPress} />
+        </S.SearchWrapper>
+      )}
       <S.HamburgerWrapper>
         <img
           src="/icons/hamburger.svg"

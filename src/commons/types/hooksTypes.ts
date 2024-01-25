@@ -26,3 +26,8 @@ export interface IUseRouterMovePage {
   onClickMovePage: (path: string) => () => void;
   routerMovePage: (path: string) => void;
 }
+
+export interface IExtractorDataObj {
+  title: string;
+  content: string;
+}

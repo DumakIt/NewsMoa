@@ -94,9 +94,13 @@ export default function GlobeEdit({
       const pElement = el.querySelectorAll(".popupTitle.hasData");
       pElement.forEach((el) => {
         el.addEventListener("click", () => {
-          // url에 "/"가 있으면 거기까지를 경로로 인식해서 문제가 생기기 때문에 "/"가 아닌 다른 문자로 변경
-          // 해당 페이지에서 다시 "/"로 변경할 예정이기 때문에 다른 url이랑 겹치지 않는 문자로 변경
-          router.push(`/${el.id.replace(/\//g, "-_no_slash_-")}`);
+          // url에 "/", "?"가 있으면 거기까지를 경로로 인식해서 문제가 생기기 때문에 "/", "?"가 아닌 다른 문자로 변경
+          // 해당 페이지에서 다시 "/", "?"로 변경할 예정이기 때문에 다른 url이랑 겹치지 않는 문자로 변경
+          router.push(
+            `/${el.id
+              .replace(/\//g, "-_no_slash_-")
+              .replace(/\?/g, "-_no_question_-")}`,
+          );
         });
       });
 

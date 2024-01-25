@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { ITranslateDataState } from "../types/atomsTypes";
+import { IExtractorDataState, ITranslateDataState } from "../types/atomsTypes";
 
 export const RendingDataState = atom<ITranslateDataState>({
   key: "RendingDataState",
@@ -38,5 +38,15 @@ export const hasMoreState = atom({
 
 export const isHamburgerState = atom({
   key: "hamburgerState",
+  default: false,
+});
+
+export const detailDataState = atom<IExtractorDataState>({
+  key: "detailDataState",
+  default: {},
+});
+
+export const isSummaryState = atom({
+  key: "isSummaryState",
   default: false,
 });
