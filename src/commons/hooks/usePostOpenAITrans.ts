@@ -11,7 +11,7 @@ export const usePostOpenAITrans = () => {
     url: string,
   ) => {
     try {
-      // open ai API는 프론트 측에서 그냥 요청시 api key가 노출되기 때문에 next.js의 API Routes를 사용하여 api구축
+      // open ai API는 클라이언트 측에서 그냥 요청시 api key가 노출되기 때문에 next.js의 API Routes를 사용하여 open ai api를 요청하는 api를 구축 하고 해당 api를 사용
       const response = await axios.post("/api/openAITranslate", {
         content: extractorData,
       });
