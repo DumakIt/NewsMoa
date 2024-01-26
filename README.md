@@ -1,40 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NewsMoa
+"세계 뉴스를 한곳에서 보고 싶다" 라는 생각과 "뉴스를 알기 쉽게 요약을 해줫으면 좋겠다" 라는 생각으로 진행된 "세계 뉴스를 한곳에 모아 번역 및 요약" 이라는 주제로 진행한 개인프로젝트 입니다
 
-## Getting Started
 
-First, run the development server:
+## Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  yarn install
+  yarn dev
 ```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 시연 자료
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+|        페이지        | 영상                                                                                                                                           |
+| :-------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+|      랜딩페이지            | ![랜딩](https://github.com/DumakIt/NewsMoa/assets/112146844/9aaa0103-6823-4ce5-883e-fccde40e346e)                                  |
+|      리스트페이지          | ![리스트](https://github.com/DumakIt/NewsMoa/assets/112146844/3322e175-fda9-4ce6-81f3-ccdffac2f45c)                                      | 
+|      디테일페이지 불러오기      | ![디테일 불러오기](https://github.com/DumakIt/NewsMoa/assets/112146844/3ad95347-b62d-4dfa-951d-ac31e20bdc49)                                   |
+|      디테일페이지 요약하기      | ![디테일 요약](https://github.com/DumakIt/NewsMoa/assets/112146844/08d73f4a-47fd-4c98-b32f-f947fa0b2f35)                                  | 
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 개발 과정 및 위기 극복 방법
+해당 글은 너무 길어져 따로 velog에 정리해 두었습니다 <br/>
+[[뉴스모아 #1] react-globe.gl 사용하여 메인페이지 지구본 구현](https://velog.io/@dumakit/%EB%89%B4%EC%8A%A4%EB%AA%A8%EC%95%84-1) <br/>
+[[뉴스모아 #2] 뉴스API 및 번역API 연동, 랜딩페이지 완료](https://velog.io/@dumakit/%EB%89%B4%EC%8A%A4%EB%AA%A8%EC%95%84-2) <br/>
+[[뉴스모아 #3] 뉴스 검색 추가 및 리스트 페이지 완료](https://velog.io/@dumakit/%EB%89%B4%EC%8A%A4%EB%AA%A8%EC%95%84-3) <br/>
+[[뉴스모아 #4] Article Extractor 및 open ai 연동 및 디테일 페이지 완료](https://velog.io/@dumakit/%EB%89%B4%EC%8A%A4%EB%AA%A8%EC%95%84-4) <br/>
 
-## Learn More
+---
+## 회고
+NewsMoa는 세계의 다양한 뉴스를 한곳에 모아 번역을 하고 간결하게 요약하는 웹서비스를 만드는 것을 목표로 했습니다
+기획을 할 때 다양한 시도를 해보고 싶어 react-globe을 이용하여 색다른 시각적인 요소를 주고 OpenAI API를 사용하여 웹에 AI를 연동해 보자고 생각하며 기획과 개발을 시작했습니다
 
-To learn more about Next.js, take a look at the following resources:
+개발을 진행하며 다양한 문제가 발생했었고 이를 해결하기 위해 며칠식 걸리기도 했었습니다 하지만 이러한 어려움을 극복하면서 빠르게 문제를 해결하는 능력을 키울 수 있었습니다. 특히, three.JS의 부족한 지식과 react-globe 라이브러리를 통한 개발, 욕심으로 다양한 API의 동시 사용으로 인해 웹의 성능이 떨어진 것은 아쉬운 부분이었지만, 지속적인 공부와 리팩토링을 통해 이를 개선해 나갈 계획입니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+저는 앞으로 다양한 기술을 배우고 사용해 보며 조금 더 재사용 성과 가독성이 높은 코드를 작성하고 유지 보수가 용이한 코드를 작성할 것입니다 이러한 노력이 좋은 사용자 경험과 높은 퀄리티의 코드로 이어질 것이라 생각합니다
+이 프로젝트를 통해 얻은 경험은 앞으로의 도전과 성장에 큰 토대가 되리라 믿습니다. 
+읽어주셔서 감사합니다.
