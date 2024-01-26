@@ -33,7 +33,7 @@ export const NewsImg = styled.img`
 
 export const NewsTitle = styled.h2`
   margin: 5px 0;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 600;
   color: white;
   text-overflow: ellipsis;
